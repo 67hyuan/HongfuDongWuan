@@ -1,0 +1,147 @@
+﻿@model HongfuDongWuan.Models.LoginModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .bs-example {
+            height: 220px;
+        }
+
+        .centerlook {
+            padding-left: 400px;
+            font-weight: bold;
+            width: 1000px;
+        }
+
+        .error {
+            padding-left: 400px;
+            font-weight: bold;
+            width: 1000px;
+            color: red;
+        }
+
+        .loginbtn {
+            padding-left: 500px;
+        }
+    </style>
+
+</head>
+
+<body>
+    @using (Html.BeginForm())
+    {
+    <div class="bs-example" style="border:2px solid gray; height:100%;">
+        <div style="height:50px">
+            <table class="table">
+                <tr>
+                    <td>
+                        <a href="https://www.energy361.com/index.aspx" target="_blank" style="position:center">
+                            @*361能源网*@
+                            <img src="~/Images/logo.png" style="position:center" width="250" height="50" />
+                        </a>
+                    </td>
+                    <td style="text-align:right">
+                        @Html.ActionLink("打开demo文件", "OpenFile", "Home", new { target = "_blank", @style = "font-weight:bold;font-size:large;color:blue" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="form-group centerlook">            
+            <h1 style="font-weight:bold">东莞大数据比赛模型 <br/></h1>
+        </div>
+        <div class="form-group centerlook">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>用户名: </label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.UserName)*
+                        @Html.ValidationMessageFor(model => model.UserName, String.Empty, new { @class = "help-inline", @style = "color:red" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>密码:</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Password) *
+                        @Html.ValidationMessageFor(model => model.Password, String.Empty, new { @class = "help-inline", @style = "color:red" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        @*<div class="form-group centerlook">
+            <label>用户名: </label>
+            @Html.EditorFor(model => model.UserName)*
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+        <div class="form-group centerlook">
+            <label>密码:</label>
+            @Html.EditorFor(model => model.Password) *
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>*@
+
+        <div class="form-group error">
+            @if (@ViewBag.NotValidUser != null)
+            {
+                <label> @ViewBag.NotValidUser</label>
+            }
+        </div>
+        <div class="loginbtn">
+            <input type="submit" value="登录" class="btn btn-primary" />
+        </div>
+        <div style="height:50px">
+
+        </div>
+    </div>
+    }
+</body>
+
+</html>
+
+
+
+
+
+@*<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>*@
+
+@*<div class="row">
+    <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+</div>*@

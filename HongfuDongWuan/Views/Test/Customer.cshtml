@@ -1,0 +1,124 @@
+﻿
+@model IEnumerable<HongfuDongWuan.Models.CustomerModel>
+
+@{
+    ViewBag.Title = "Customer";
+}
+
+@*@Scripts.Render("~/Scripts/jquery-3.3.1.min.js") //this line is now in _Layout.cshtml, so we don't need to reference here*@
+<script type="text/javascript">
+    function calFunc() {
+        $("#cusTitle").show();
+        $('th:nth-child(2),td:nth-child(2)').show();
+    }
+
+    function showAvgstock() {
+        $("#cusTitle").show();
+        $('th:nth-child(2),td:nth-child(2)').show();
+        //$("#avgStkHeadCol").show();
+        //$("#avgStkColData").show();
+    }
+
+    function hideAvgstock() {
+        $("#cusTitle").hide();
+        $('th:nth-child(2),td:nth-child(2)').hide();
+        //$("#avgStkHeadCol").hide();
+        //$("#avgStkColData").hide();
+    }
+</script>
+
+
+@*<h2 id="cusTitle">Customer</h2>*@
+
+<div>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <td>
+                @using (Html.BeginForm("CalcCapital", "Test", FormMethod.Post))
+                {
+                    <input type="submit" value="计算" style="background-color:lightskyblue;font-weight:bold;font-size:large" />
+                }
+            </td>
+            <td style="font-weight:bold;font-size:large;color:darkblue">
+                @using (Html.BeginForm("FilterCreditRating", "Test", FormMethod.Get))
+                {
+                    <text>终端用户信用评级  </text>@Html.DropDownList("creditRating", new SelectList(ViewBag.CreditRating))
+                    <input type="submit" value="搜索" style="background-color:ActiveCaption;font-weight:bold;font-size:large" />
+                }
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>月份</th>
+            <th>终端用户</th>
+            <th>
+                平均库存
+            </th>
+            <th width="60">
+                前12月库存周转次数
+            </th>
+            <th>
+                月结逾期次数
+            </th>
+            <th>
+                货物滞销率（%）
+            </th>
+            <th>
+                退换货次数
+            </th>
+            <th>
+                货物破损率（%）
+            </th>
+            <th>
+                月累计发货数量（kg)
+            </th>
+            <th>
+                商品平均单价
+                (RMB/kg)
+            </th>
+            <th>
+                当月累计
+                发货金额(RMB)
+            </th>
+            <th>
+                第三方信
+                用评级
+            </th>
+            <th>
+                加权授信评分
+            </th>
+            <th>
+                是否可融资
+            </th>
+            <th>
+                融资金额
+            </th>
+            <th>
+                融资利率 (%)
+            </th>
+        </tr>
+        @foreach (var d in Model)
+        {
+            <tr style="@(@d.CanRaiseCapital.Equals("Y") ? "Background-color:orange" : "Background-color:white")">
+                <td>@d.Month.Value.ToShortDateString()</td>
+                <td>@d.EndUser</td>
+                <td>@Html.Raw(String.Format("{0:N0}", @d.AverageStock))</td>
+                <td>@d.TurnoverRate</td>
+                <td>@d.NumOfOverdue</td>
+                <td>@Html.Raw(String.Format("{0:P0}", @d.SlowSalesRate))</td>
+                <td>@d.ReturnRate</td>
+                <td>@Html.Raw(String.Format("{0:P0}", @d.BreakageRate))</td>
+                <td>@Html.Raw(String.Format("{0:N0}", @d.MonCumlShipQty))</td>
+                <td>@d.UnitPrice</td>
+                <td>@Html.Raw(String.Format("{0:C0}", @d.MonCumlShipAmt))</td>
+                <td>@d.CreditRating</td>
+                <td>@Html.Raw(@d.CreditScore.Equals(0.0) ? "-" : @d.CreditScore.ToString())</td>
+                <td>@d.CanRaiseCapital</td>
+                <td>@Html.Raw(@d.CapitalAmt == 0 ? "-" : @Html.Raw(String.Format("{0:C0}", @d.CapitalAmt)).ToString())</td>
+                <td>@Html.Raw(@d.CapExpRate == 0 ? "-" : @Html.Raw(String.Format("{0:P}", @d.CapExpRate)).ToString())</td>
+            </tr>
+        }
+    </table>
+
+</div>
